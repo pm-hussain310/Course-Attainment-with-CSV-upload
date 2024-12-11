@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{%extends 'testApp/base.html'%}
+{%load static%}
+{%block content%}
+<link rel="stylesheet" href="{% static 'css/course_attainment_style.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="container" align=left style="width:50%">
+  <div class="jumbotron">
+      <h1 style = "color: red; padding-bottom: 10px;">Internal Question Papers</u></h1>
+      {%include 'testApp/messages.html'%}
+      <form  method="post"> {%csrf_token%}
+        <h3>Mid -I Questions</h3>
+          <table border=2 style="width:100%">
+            <tr>
+              <th style="width:50px;text-align:center;">
+                <select name="qno" id="qno" style="width: 100px; height:50px;"  required>
+                  <option value="Q">Q1</option>
+                </select>
+              </th>
+              <th><input id='question' type="text" name="question" value="" class="form-control" placeholder="Type Question here ...." style="height:80px;" required></th>
+              <th style="width:50px;text-align:center;">
+                <select name="co_id" id="co_id" style="width: 100px; height:120px;" multiple required>
+                  {%for co in cos%}
+                  <option value="{{co.id}}">{{co}}</option>
+                  {%endfor%}
+                </select>
+              </th>
+            </tr>
+          </table><br>
+          <input type="submit" name="" value="Add Question" class="btn btn-primary">
+      </form>
+
+      <br>
+      <table border=2 style="width:100%">
+        <tr>
+          <tr>
+            <th style="width:50px; text-align:center;">Sl.No</th>
+            <th style="text-align:center;">Question</th>
+            <th style="width:50px;text-align:center;">CO</th>
+          </tr>
+
+          {%for q in external%}
+            <tr>
+              <th style="width:50px; text-align:center;">{{forloop.counter}}</th>
+              <th style="text-align:left;">{{q.question}}</th>
+              <th style="width:50px;text-align:center;">{{q.cos_mapped}}</th>
+            </tr>
+          {%endfor%}
+        </tr>
+      </table><br>
+
+
+      <a href="{%url 'co_po_matrix1'%}" class="btn btn-primary" style="float:right;"> Next</a>
+  </div>
+</div>
+{%endblock%}
